@@ -1,0 +1,24 @@
+import turtle
+
+def setup_turtle(title, bgcolor):
+    screen = turtle.Screen()
+    screen.title(title)
+    screen.bgcolor(bgcolor)
+    return screen
+
+def draw_flower():
+    t = turtle.Turtle()
+    t.speed("fastest")
+    t.color("magenta")
+    
+    for _ in range(36):  # 36 circles for a complete flower-like pattern
+        t.circle(100)  # Radius of each circle
+        t.right(10)    # Rotate by 10 degrees
+
+def main():
+    screen = setup_turtle("Flower Pattern", "black")
+    draw_flower()
+    screen.mainloop()
+
+if __name__ == "__main__":
+    main()
