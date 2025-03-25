@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Language Translator</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            padding: 20px;
+            background-color: #f4f4f4;
+        }
+        h2 {
+            color: #333;
+        }
+        textarea {
+            width: 80%;
+            height: 100px;
+            padding: 10px;
+            font-size: 16px;
+            margin-bottom: 10px;
+        }
+        select, button {
+            margin: 10px;
+            padding: 10px;
+            font-size: 16px;
+        }
+        button {
+            background-color: #007bff;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+        .output {
+            width: 80%;
+            height: 100px;
+            padding: 10px;
+            font-size: 16px;
+            border: 1px solid #ccc;
+            background-color: white;
+            display: inline-block;
+        }
+    </style>
+</head>
+<body>
+
+    <h2>Language Translator</h2>
+    
+    <textarea id="inputText" placeholder="Enter text to translate..."></textarea><br>
+    
+    <label for="sourceLang">From:</label>
+    <select id="sourceLang">
+        <option value="en">English</option>
+    </select>
+
+    <label for="targetLang">To:</label>
+    <select id="targetLang">
+        <option value="es">Spanish</option>
+        <option value="fr">French</option>
+        <option value="de">German</option>
+        <option value="hi">Hindi</option>
+        <option value="te">Telugu</option>
+        <option value="ta">Tamil</option>
+    </select>
+    
+    <br>
+    <button onclick="translateText()">Translate</button>
+
+    <h3>Translated Text:</h3>
+    <div class="output" id="translatedText"></div>
+
+    <script>
+        async function translateText() {
+            let text = document.getElementById("inputText").value;
+            let sourceLang = document.getElementById("sourceLang").value;
+            let targetLang = document.getElementById("targetLang").value;
+
+            if (text.trim() === "") {
+                alert("Please enter text to translate!");
+                return;
+            }
+
+            let url = `https://translate.googleapis.com/translate_a/single?client=gtx&sl=${sourceLang}&tl=${targetLang}&dt=t&q=${encodeURIComponent(text)}`;
+
+            try {
+                let response = await fetch(url);
+                let data = await response.json();
+                document.getElementById("translatedText").innerText = data[0][0][0];
+            } catch (error) {
+                console.error("Translation Error:", error);
+                document.getElementById("translatedText").innerText = "Error translating text.";
+            }
+        }
+    </script>
+
+</body>
+</html>
